@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EcoCharge | Wind & Solar Powered Charging Station</title>
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<!-- ═══ NAVBAR ═══ -->
+<nav>
+  <div class="nav-logo" onclick="showPage('home')">Eco<span>Charge</span></div>
+  <div class="nav-links">
+    <button class="nav-link active" onclick="showPage('home')">Home</button>
+    <button class="nav-link" onclick="showPage('about')">About</button>
+    <button class="nav-link" onclick="showPage('dashboard')">Dashboard</button>
+    <button class="nav-link" onclick="showPage('theft')">Anti-Theft <span class="nav-badge" id="theftBadge">0</span></button>
+    <button class="nav-link" onclick="showPage('contact')">Contact</button>
+    <button class="nav-admin-btn" id="adminBtn" onclick="openModal()">⚙ Admin Login</button>
+  </div>
+</nav>
+
+<!-- ═══════════════════════ HOME ═══════════════════════ -->
+<div class="page active" id="page-home">
+  <section class="hero">
+    <canvas class="hero-canvas" id="heroCanvas"></canvas>
+    <div class="hero-content">
+      <div class="hero-badge">🌱 Renewable Energy Thesis Project 2025</div>
+      <h1>
+        <span class="g">Wind & Solar</span><br>
+        Powered <span class="b">Charging Station</span>
+      </h1>
+      <p class="hero-sub">An intelligent hybrid renewable energy charging system with real-time monitoring and anti-theft protection — built for a sustainable future.</p>
+      <div class="hero-actions">
+        <button class="btn-primary" onclick="showPage('dashboard')">📊 View Dashboard</button>
+        <button class="btn-outline" onclick="showPage('about')">Learn More →</button>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat"><div class="hero-stat-val" id="hv1">—</div><div class="hero-stat-label">Battery (V)</div></div>
+        <div class="hero-stat"><div class="hero-stat-val" id="hv2">—</div><div class="hero-stat-label">Charge (%)</div></div>
+        <div class="hero-stat"><div class="hero-stat-val" id="hv3">0</div><div class="hero-stat-label">Theft Alerts</div></div>
+      </div>
+    </div>
+  </section>
+
+  <div style="background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:2rem;">
+    <div style="max-width:1100px;margin:0 auto;">
+      <div style="text-align:center;margin-bottom:2rem;">
+        <div class="section-title">Why <span class="accent">EcoCharge</span>?</div>
+        <p class="section-sub">Clean energy + smart security in one system</p>
+      </div>
+      <div class="about-grid">
+        <div class="feat-card"><div class="feat-icon">🌬️</div><div class="feat-title">Wind Energy</div><div class="feat-desc">Kinetic energy captured via turbine and converted to usable DC electricity.</div></div>
+        <div class="feat-card"><div class="feat-icon">☀️</div><div class="feat-title">Solar Energy</div><div class="feat-desc">PV cells harvest sunlight and convert it to DC power with high efficiency.</div></div>
+        <div class="feat-card"><div class="feat-icon">🔋</div><div class="feat-title">Hybrid Storage</div><div class="feat-desc">Dual-input charge controller manages both sources simultaneously.</div></div>
+        <div class="feat-card"><div class="feat-icon">🔐</div><div class="feat-title">Anti-Theft</div><div class="feat-desc">IR sensor detects intrusion and triggers SMS alerts via SIM800L GSM.</div></div>
+        <div class="feat-card"><div class="feat-icon">📡</div><div class="feat-title">IoT Monitoring</div><div class="feat-desc">Real-time data from Arduino sent to server for live dashboard display.</div></div>
+      </div>
+    </div>
+  </div>
+  <footer>&copy; 2025 <span>EcoCharge</span> — Wind & Solar Charging Station | Thesis Project</footer>
+</div>
+
+<!-- ═══════════════════════ ABOUT ═══════════════════════ -->
+<div class="page" id="page-about">
+  <div class="section">
+    <div class="section-title">About the <span class="accent">Project</span></div>
+    <p class="section-sub">A comprehensive hybrid renewable energy charging station with integrated security</p>
+
+    <div class="about-grid" style="margin-bottom:2rem;">
+      <div class="about-card"><h3>🌬️ Wind Energy System</h3><p>A small-scale wind turbine converts kinetic energy into AC electricity, rectified to DC. Output follows P = ½ρAv³. Powers the battery bank when solar input is low.</p></div>
+      <div class="about-card"><h3>☀️ Solar Energy System</h3><p>Polycrystalline solar panels (~17% efficiency) convert photon energy to DC power via the photovoltaic effect. MPPT algorithm ensures optimal energy harvest.</p></div>
+      <div class="about-card"><h3>⚡ Hybrid Charging</h3><p>Both sources feed into a dual-input charge controller managing priority, load balancing, and overcharge protection. Step-down converter provides regulated 5V/12V output.</p></div>
+      <div class="about-card"><h3>🔒 Anti-Theft System</h3><p>IR proximity sensor detects unauthorized access. Arduino triggers SIM800L GSM to send SMS alert. Relay module physically locks the charging port. All events are logged.</p></div>
+    </div>
+
+    <div class="divider"></div>
+    <div class="section-title" style="font-size:1.3rem;margin-bottom:1.25rem;">System <span class="accent">Block Diagram</span></div>
+    <div class="block-diagram">
+      <div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:1rem;text-align:center;">Energy Flow: Input → Processing → Output → Security</div>
+      <div class="diagram-flow" style="margin-bottom:1rem;">
+        <div class="diag-node green">🌬️ Wind Turbine</div><div class="diag-arrow">→</div>
+        <div class="diag-node">Rectifier</div><div class="diag-arrow">→</div>
+        <div class="diag-node amber">Charge Controller</div><div class="diag-arrow">→</div>
+        <div class="diag-node blue">Battery Bank</div><div class="diag-arrow">→</div>
+        <div class="diag-node green">⚡ USB Output</div>
+      </div>
+      <div class="diagram-flow" style="margin-bottom:1rem;">
+        <div class="diag-node green">☀️ Solar Panel</div><div class="diag-arrow">→</div>
+        <div class="diag-node">MPPT</div><div class="diag-arrow">→</div>
+        <div class="diag-node amber">Step-down Conv.</div><div class="diag-arrow">→</div>
+        <div class="diag-node blue">🖥️ Arduino UNO</div><div class="diag-arrow">→</div>
+        <div class="diag-node">📺 LCD Display</div>
+      </div>
+      <div class="diagram-flow">
+        <div class="diag-node">👁️ IR Sensor</div><div class="diag-arrow">→</div>
+        <div class="diag-node blue">Arduino UNO</div><div class="diag-arrow">→</div>
+        <div class="diag-node amber">SIM800L GSM</div><div class="diag-arrow">→</div>
+        <div class="diag-node green">📱 SMS Alert</div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <div class="section-title" style="font-size:1.3rem;margin-bottom:1.25rem;">System <span class="accent">Components</span></div>
+    <div class="components-grid">
+      <div class="comp-card"><div class="icon">🖥️</div><div class="name">Arduino UNO</div><div class="desc">Microcontroller, 14 I/O pins</div></div>
+      <div class="comp-card"><div class="icon">☀️</div><div class="name">Solar Panel</div><div class="desc">Polycrystalline, 20W</div></div>
+      <div class="comp-card"><div class="icon">🌬️</div><div class="name">Wind Turbine</div><div class="desc">Micro turbine, 12V DC</div></div>
+      <div class="comp-card"><div class="icon">📡</div><div class="name">SIM800L GSM</div><div class="desc">SMS/GPRS Module</div></div>
+      <div class="comp-card"><div class="icon">📺</div><div class="name">16x2 LCD I2C</div><div class="desc">Display module</div></div>
+      <div class="comp-card"><div class="icon">🔌</div><div class="name">Relay Module</div><div class="desc">5V 10A relay switch</div></div>
+      <div class="comp-card"><div class="icon">👁️</div><div class="name">IR Sensor</div><div class="desc">Proximity detection</div></div>
+      <div class="comp-card"><div class="icon">⬇️</div><div class="name">Step-down Conv.</div><div class="desc">Buck converter LM2596</div></div>
+    </div>
+
+    <div class="divider"></div>
+    <div class="section-title" style="font-size:1.3rem;margin-bottom:1.25rem;">Mission & <span class="accent">Objectives</span></div>
+    <div class="obj-list">
+      <div class="obj-item"><div class="obj-num">01</div><div class="obj-text">Design and implement a hybrid wind-solar charging station capable of delivering stable power output under varying environmental conditions.</div></div>
+      <div class="obj-item"><div class="obj-num">02</div><div class="obj-text">Develop an anti-theft protection system using IR sensing, relay-controlled locking, and automated SMS alerts via GSM module.</div></div>
+      <div class="obj-item"><div class="obj-num">03</div><div class="obj-text">Build a real-time IoT monitoring platform that displays battery voltage, energy input from each source, and system health status.</div></div>
+      <div class="obj-item"><div class="obj-num">04</div><div class="obj-text">Create a secure web application with role-based access control for administrators to manage the system remotely.</div></div>
+      <div class="obj-item"><div class="obj-num">05</div><div class="obj-text">Demonstrate the viability of off-grid renewable energy charging as a sustainable and scalable alternative to conventional power sources.</div></div>
+      <div class="obj-item"><div class="obj-num">06</div><div class="obj-text">Log all security events and energy metrics to a persistent database for historical analysis and performance optimization.</div></div>
+    </div>
+  </div>
+  <footer>&copy; 2025 <span>EcoCharge</span></footer>
+</div>
+
+<!-- ═══════════════════════ DASHBOARD ═══════════════════════ -->
+<div class="page" id="page-dashboard">
+  <div class="dash-header">
+    <div>
+      <div class="dash-title">⚡ Live Monitoring Dashboard</div>
+      <div style="font-size:0.75rem;color:var(--text-muted);margin-top:2px;" id="lastUpdated">Last updated: —</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
+      <div class="status-live">System Online</div>
+      <span class="status-badge active"><span class="status-dot"></span>Active</span>
+      <span class="admin-label admin-only">🔑 ADMIN</span>
+      <button class="btn-primary" style="padding:0.4rem 1rem;font-size:0.8rem;" onclick="Dashboard.useSim?Dashboard.simulate():Dashboard.fetchLatest()">🔄 Refresh</button>
+    </div>
+  </div>
+
+  <div class="dash-grid">
+    <div class="metric-card">
+      <div class="metric-label">🔋 Battery Voltage</div>
+      <div><span class="metric-value green" id="mBatV">—</span><span class="metric-unit"> V</span></div>
+      <div class="metric-bar-wrap"><div class="metric-bar green" id="mBatBar" style="width:0%"></div></div>
+      <div style="font-size:0.7rem;color:var(--text-dim);margin-top:4px;">Healthy: 11.5V – 14.5V</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">⚡ Charge Level</div>
+      <div><span class="metric-value green" id="mCharge">—</span><span class="metric-unit"> %</span></div>
+      <div class="metric-bar-wrap"><div class="metric-bar green" id="mChargeBar" style="width:0%"></div></div>
+      <div id="mChargeSts" style="margin-top:6px;"><span class="status-badge active"><span class="status-dot"></span>Charging</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">🌬️ Wind Energy Input</div>
+      <div><span class="metric-value blue" id="mWind">—</span><span class="metric-unit"> W</span></div>
+      <div class="metric-bar-wrap"><div class="metric-bar blue" id="mWindBar" style="width:0%"></div></div>
+      <div style="font-size:0.7rem;color:var(--text-dim);margin-top:4px;">Speed: <span id="mWindSpd">—</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">☀️ Solar Energy Input</div>
+      <div><span class="metric-value amber" id="mSolar">—</span><span class="metric-unit"> W</span></div>
+      <div class="metric-bar-wrap"><div class="metric-bar amber" id="mSolarBar" style="width:0%"></div></div>
+      <div style="font-size:0.7rem;color:var(--text-dim);margin-top:4px;">Irradiance: <span id="mIrr">—</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">📊 Total Output Power</div>
+      <div><span class="metric-value green" id="mTotal">—</span><span class="metric-unit"> W</span></div>
+      <div class="metric-bar-wrap"><div class="metric-bar green" id="mTotalBar" style="width:0%"></div></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">🌡️ Temperature</div>
+      <div><span class="metric-value blue" id="mTemp">—</span><span class="metric-unit"> °C</span></div>
+      <div class="metric-bar-wrap"><div class="metric-bar blue" id="mTempBar" style="width:0%"></div></div>
+    </div>
+  </div>
+
+  <div class="charts-grid">
+    <div class="chart-card"><div class="chart-title">⚡ Power Input Over Time</div><div class="chart-wrap"><canvas id="powerChart"></canvas></div></div>
+    <div class="chart-card"><div class="chart-title">🔋 Battery Voltage History</div><div class="chart-wrap"><canvas id="voltChart"></canvas></div></div>
+    <div class="chart-card"><div class="chart-title">📡 Energy Source Distribution</div><div class="chart-wrap"><canvas id="pieChart"></canvas></div></div>
+    <div class="chart-card"><div class="chart-title">🌡️ Temperature & Wind Speed</div><div class="chart-wrap"><canvas id="envChart"></canvas></div></div>
+  </div>
+
+  <div class="alerts-section">
+    <div class="section-title" style="font-size:1.1rem;margin-bottom:1rem;">🔔 System <span class="accent">Alerts</span></div>
+    <div id="alertsList">
+      <div class="alert-item success">✅ System initialized — All sensors online</div>
+      <div class="alert-item info">ℹ️ Solar panel output optimal — Clear sky conditions</div>
+    </div>
+  </div>
+  <footer>&copy; 2025 <span>EcoCharge</span></footer>
+</div>
+
+<!-- ═══════════════════════ ANTI-THEFT ═══════════════════════ -->
+<div class="page" id="page-theft">
+  <div class="dash-header">
+    <div>
+      <div class="dash-title">🔐 Anti-Theft Monitoring</div>
+      <div style="font-size:0.75rem;color:var(--text-muted);margin-top:2px;">IR Sensor + GSM Alert System</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
+      <span class="status-badge active" id="irStsMain"><span class="status-dot"></span>IR Sensor Active</span>
+      <span class="admin-label admin-only">🔑 ADMIN</span>
+    </div>
+  </div>
+
+  <div class="theft-grid">
+    <!-- IR Sensor -->
+    <div class="sensor-card">
+      <div class="sensor-ring safe" id="irSensorRing">👁️</div>
+      <div class="sensor-name" id="irSensorName">IR Proximity Sensor</div>
+      <div class="sensor-status" id="irSensorStatus">Status: <span style="color:var(--green);font-weight:700;">CLEAR — No Intrusion</span></div>
+      <div style="margin-top:1rem;"><span class="status-badge active" id="irBadge"><span class="status-dot"></span>Monitoring</span></div>
+      <div style="font-size:0.75rem;color:var(--text-dim);margin-top:0.75rem;">Last scan: <span id="irLastScan">—</span></div>
+      <div class="control-btns admin-only">
+        <button class="ctrl-btn lock" onclick="Theft.trigger()">⚠️ Simulate Alert</button>
+        <button class="ctrl-btn unlock" onclick="Theft.clear()">✅ Clear Alert</button>
+      </div>
+    </div>
+
+    <!-- GSM Module -->
+    <div class="sensor-card">
+      <div class="sensor-ring safe">📡</div>
+      <div class="sensor-name">SIM800L GSM Module</div>
+      <div class="sensor-status">SMS Alerts: <span style="color:var(--blue);font-weight:700;">Ready</span></div>
+      <div style="margin-top:1rem;font-size:0.78rem;color:var(--text-muted);line-height:1.6;text-align:left;background:var(--bg2);border-radius:8px;padding:1rem;">
+        <div>📶 Signal: <span style="color:var(--green);">Strong (GSM 900MHz)</span></div>
+        <div style="margin-top:0.4rem;">📱 Admin #: <span style="color:var(--blue);">+63 9XX XXX XXXX</span></div>
+        <div style="margin-top:0.4rem;">📨 SMS Sent: <span style="color:var(--green);font-weight:800;font-family:var(--mono);" id="smsSentCount">0</span></div>
+        <div style="margin-top:0.4rem;">📶 Network: <span style="color:var(--amber);">Smart PH</span></div>
+      </div>
+      <div class="control-btns admin-only">
+        <button class="ctrl-btn sms" onclick="Theft.sendTestSMS()">📨 Send Test SMS</button>
+      </div>
+    </div>
+
+    <!-- Relay Control -->
+    <div class="sensor-card">
+      <div class="sensor-ring safe" id="relayRing">🔌</div>
+      <div class="sensor-name">Relay Lock Control</div>
+      <div class="sensor-status">Port: <span style="color:var(--green);font-weight:700;" id="portStatus">UNLOCKED</span></div>
+      <div style="margin-top:1rem;font-size:0.78rem;color:var(--text-muted);line-height:1.6;text-align:left;background:var(--bg2);border-radius:8px;padding:1rem;">
+        <div>⚡ Relay State: <span id="relayState" style="color:var(--green);">OFF (Port Open)</span></div>
+        <div style="margin-top:0.4rem;">🔋 Charging Ports: <span style="color:var(--green);">2/2 Active</span></div>
+        <div style="margin-top:0.4rem;">🕐 Last Toggled: <span id="relayTime">—</span></div>
+      </div>
+      <div class="control-btns">
+        <button class="ctrl-btn lock admin-only" onclick="Relay.lock()">🔒 Lock Port</button>
+        <button class="ctrl-btn unlock admin-only" onclick="Relay.unlock()">🔓 Unlock Port</button>
+        <button class="ctrl-btn guest-only" style="border-color:var(--text-dim);color:var(--text-muted);" onclick="openModal();showToast('⚠️ Admin login required','warning')">👤 Login Required</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" style="padding-top:0;">
+    <div class="section-title" style="font-size:1.1rem;margin-bottom:1rem;">📨 SMS Alert <span class="accent">Logs</span></div>
+    <div class="sms-log" id="smsLog">
+      <div data-empty style="text-align:center;color:var(--text-dim);font-size:0.85rem;padding:1rem;">No SMS alerts sent yet. System monitoring...</div>
+    </div>
+
+    <div class="divider"></div>
+    <div class="section-title" style="font-size:1.1rem;margin-bottom:1rem;">📋 Theft Detection <span class="accent">History</span></div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>#</th><th>Timestamp</th><th>Event Type</th><th>Sensor</th><th>SMS Status</th><th>Action Taken</th></tr>
+        </thead>
+        <tbody id="theftTableBody">
+          <tr><td colspan="6" style="text-align:center;color:var(--text-dim);padding:2rem;">No theft events recorded. System secure.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <footer>&copy; 2025 <span>EcoCharge</span></footer>
+</div>
+
+<!-- ═══════════════════════ CONTACT ═══════════════════════ -->
+<div class="page" id="page-contact">
+  <div class="section">
+    <div class="section-title">Meet the <span class="accent">Team</span></div>
+    <p class="section-sub">The engineers and researchers behind EcoCharge</p>
+    <div class="team-grid">
+      <div class="team-card"><div class="team-avatar">RA</div><div class="team-name">Rhey Agcoili</div><div class="team-role">Project Lead & Hardware Engineer</div></div>
+      <div class="team-card"><div class="team-avatar">MR</div><div class="team-name">Marden Barangan</div><div class="team-role">Software & IoT Developer</div></div>
+      <div class="team-card"><div class="team-avatar">VG</div><div class="team-name">Victor Guillermo III</div><div class="team-role">Electronics Engineer</div></div>
+      <div class="team-card"><div class="team-avatar">VG</div><div class="team-name">Victor Guillermo III</div><div class="team-role">Research & Documentation</div></div>
+    </div>
+
+    <div class="divider"></div>
+    <div class="section-title" style="font-size:1.3rem;margin-bottom:1rem;">📁 Project <span class="accent">Documentation</span></div>
+    <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:2rem;">
+      <a class="doc-btn" href="#" onclick="showToast('📄 Technical Paper downloaded','success');return false;">📄 Technical Paper (PDF)</a>
+      <a class="doc-btn" href="#" onclick="showToast('📐 Schematic downloaded','success');return false;">📐 Circuit Schematic</a>
+      <a class="doc-btn" href="#" onclick="showToast('💻 Source code downloaded','success');return false;">💻 Source Code (ZIP)</a>
+      <a class="doc-btn" href="#" onclick="showToast('📊 Presentation downloaded','success');return false;">📊 Slides (PPTX)</a>
+    </div>
+
+    <div class="divider"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;flex-wrap:wrap;">
+      <div>
+        <div class="section-title" style="font-size:1.3rem;margin-bottom:1rem;">✉️ Contact <span class="accent">Us</span></div>
+        <div class="contact-form">
+          <div class="form-group"><label class="form-label">Full Name *</label><input class="form-input" type="text" id="cName" placeholder="Your name"></div>
+          <div class="form-group"><label class="form-label">Email Address *</label><input class="form-input" type="email" id="cEmail" placeholder="you@email.com"></div>
+          <div class="form-group">
+            <label class="form-label">Subject</label>
+            <select class="form-select form-input" id="cSubject">
+              <option>General Inquiry</option><option>Thesis Collaboration</option><option>Technical Support</option><option>Hardware Replication</option>
+            </select>
+          </div>
+          <div class="form-group"><label class="form-label">Message *</label><textarea class="form-textarea" id="cMessage" placeholder="Your message..."></textarea></div>
+          <button class="btn-primary" onclick="submitContact()" style="width:100%;">Send Message 🚀</button>
+          <div class="form-success" id="formSuccess">✅ Message sent! We'll reply within 24 hours.</div>
+        </div>
+      </div>
+      <div>
+        <div class="section-title" style="font-size:1.3rem;margin-bottom:1rem;">📍 Project <span class="accent">Info</span></div>
+        <div class="about-card" style="margin-bottom:1rem;"><h3>🏫 Institution</h3><p>North Western University of the Philippines — College of Engineering</p></div>
+        <div class="about-card" style="margin-bottom:1rem;"><h3>📅 Academic Year</h3><p>2024–2025 | B.S. Computer Engineering</p></div>
+        <div class="about-card" style="margin-bottom:1rem;"><h3>👨‍🏫 Thesis Adviser</h3><p>Dr. Jeniffer Del Amen, Design</p></div>
+        <div class="about-card"><h3>📧 Contact Email</h3><p style="color:var(--blue);">mardenbarangan0728@gmail.com</p></div>
+      </div>
+    </div>
+  </div>
+  <footer>&copy; 2025 <span>EcoCharge</span></footer>
+</div>
+
+<!-- ═══ ADMIN LOGIN MODAL ═══ -->
+<div class="modal-overlay" id="loginModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <div class="modal-title">⚙️ Admin Login</div>
+    <div class="modal-sub">Enter credentials to access admin controls.</div>
+    <div class="modal-error" id="loginError">Invalid username or password.</div>
+    <div class="form-group"><label class="form-label">Username</label><input class="form-input" type="text" id="loginUser" placeholder="admin"></div>
+    <div class="form-group"><label class="form-label">Password</label><input class="form-input" type="password" id="loginPass" placeholder="••••••••"></div>
+    <button class="btn-primary" style="width:100%;margin-top:0.5rem;" onclick="doLogin()">Login →</button>
+    <div style="font-size:0.75rem;color:var(--text-dim);text-align:center;margin-top:1rem;">
+      Default: <code style="color:var(--green);">admin</code> / <code style="color:var(--green);">ecocharge2025</code>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST CONTAINER -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- ═══ SCRIPTS (order matters!) ═══ -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="js/config.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/dashboard.js"></script>
+<script src="js/theft.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>
